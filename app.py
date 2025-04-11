@@ -6,7 +6,7 @@ app = Flask(__name__)
 CORS(app)
 
 # استخدم مفتاح OpenRouter مباشرة (مش آمن - الأفضل استخدام environment variable)
-OPENROUTER_API_KEY = "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"
+OPENROUTER_API_KEY = os.getenv("OPENROUTER_API_KEY")
 BASE_URL = "https://openrouter.ai/api/v1/chat/completions"
 
 @app.route("/", methods=["GET"])
