@@ -1,14 +1,13 @@
 from flask import Flask, request, jsonify
 from flask_cors import CORS
-import openai
+import requests
 import os
 
 app = Flask(__name__)
 CORS(app)
 
-# حط مفتاح OpenRouter هنا بدل XXXXX
-openai.api_key = os.getenv("OPENAI_API_KEY")
-openai.base_url = "https://openrouter.ai/api/v1"
+OPENROUTER_API_KEY = os.getenv("OPENAI_API_KEY")  # حط المفتاح في ريندر هنا
+BASE_URL = "https://openrouter.ai/api/v1/chat/completions"
 
 @app.route("/", methods=["GET"])
 def chat():
@@ -17,7 +16,6 @@ def chat():
     if not question:
         return jsonify({"message": "من فضلك ابعتلي سؤال."})
 
-    # الأسلوب المرح والذكي
     system_prompt = (
         "أنت شات بوت ذكي جدًا ودمه خفيف. بتتكلم باللهجة المصرية أو العربية الفصحى حسب المستخدم. "
         "اتكلم كأنك صاحب المستخدم. لو طلب هزار، اهزر. لو طلب جدية، كن جدي. "
@@ -25,16 +23,28 @@ def chat():
         "لو حسيت إنه ولد كلمه كأنك صاحبه، ولو بنت كأنك صحبتها. أهم حاجة تخليه حاسس إنه بيكلم شخص حقيقي بيحبه وبيفهمه."
     )
 
+    headers = {
+        "Authorization": f"Bearer {OPENROUTER_API_KEY}",
+        "Content-Type": "application/json"
+    }
+
+    payload = {
+        "model": "openai/gpt-3.5-turbo",
+        "messages": [
+            {"role": "system", "content": system_prompt},
+            {"role": "user", "content": question}
+        ]
+    }
+
     try:
-        response = openai.chat.completions.create(
-            model="openrouter/gpt-3.5-turbo",
-            messages=[
-                {"role": "system", "content": system_prompt},
-                {"role": "user", "content": question}
-            ],
-        )
-        reply = response.choices[0].message.content
-        return jsonify({"message": reply})
+        response = requests.post(BASE_URL, headers=headers, json=payload)
+        response_data = response.json()
+
+        if "choices" in response_data:
+            reply = response_data["choices"][0]["message"]["content"]
+            return jsonify({"message": reply})
+        else:
+            return jsonify({"message": f"حصل خطأ: {response_data}"})
 
     except Exception as e:
         return jsonify({"message": f"حصل خطأ: {str(e)}"})
