@@ -1,29 +1,40 @@
-import telebot
+from flask import Flask, request, jsonify
+from flask_cors import CORS
 import openai
+import os
 
-# Telegram Bot Token
-TELEGRAM_TOKEN = "7771466336:AAHEqiJqjZsi_JykiFZ2PcNh9V4mul2WvG4"
+app = Flask(__name__)
+CORS(app)
 
-# OpenRouter إعدادات
-openai.api_base = "https://openrouter.ai/api/v1"
-openai.api_key = "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"
+# حط مفتاح OpenRouter هنا بدل XXXXX
+openai.api_key = os.getenv("OPENAI_API_KEY")
+openai.base_url = "https://openrouter.ai/api/v1"
 
-bot = telebot.TeleBot(TELEGRAM_TOKEN)
+@app.route("/", methods=["GET"])
+def chat():
+    question = request.args.get("question")
 
-@bot.message_handler(func=lambda message: True)
-def chat_with_ai(message):
+    if not question:
+        return jsonify({"message": "من فضلك ابعتلي سؤال."})
+
+    # الأسلوب المرح والذكي
+    system_prompt = (
+        "أنت شات بوت ذكي جدًا ودمه خفيف. بتتكلم باللهجة المصرية أو العربية الفصحى حسب المستخدم. "
+        "اتكلم كأنك صاحب المستخدم. لو طلب هزار، اهزر. لو طلب جدية، كن جدي. "
+        "لو المستخدم قال إنه زعلان أو فرحان أو عايز حالة أو شعر أو كلمات رومانسية أو حزينة، اديله اللي يناسب حالته. "
+        "لو حسيت إنه ولد كلمه كأنك صاحبه، ولو بنت كأنك صحبتها. أهم حاجة تخليه حاسس إنه بيكلم شخص حقيقي بيحبه وبيفهمه."
+    )
+
     try:
-        response = openai.ChatCompletion.create(
-            model="openai/gpt-3.5-turbo",
+        response = openai.chat.completions.create(
+            model="openrouter/gpt-3.5-turbo",
             messages=[
-                {"role": "system", "content": "أنت بوت تليجرام ظريف ومرح، بتتكلم كأنك صاحب المستخدم، وبتفهم هو ولد ولا بنت وبتتعامل على حسب الحالة النفسية أو الطلب."},
-                {"role": "user", "content": message.text}
-            ]
+                {"role": "system", "content": system_prompt},
+                {"role": "user", "content": question}
+            ],
         )
-
-        bot.reply_to(message, response["choices"][0]["message"]["content"])
+        reply = response.choices[0].message.content
+        return jsonify({"message": reply})
 
     except Exception as e:
-        bot.reply_to(message, f"حصل خطأ: {e}")
-
-bot.infinity_polling()
+        return jsonify({"message": f"حصل خطأ: {str(e)}"})
