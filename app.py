@@ -1,12 +1,12 @@
 from flask import Flask, request, jsonify
 from flask_cors import CORS
 import requests
-import os
 
 app = Flask(__name__)
 CORS(app)
 
-OPENROUTER_API_KEY = os.getenv("OPENAI_API_KEY")  # حط المفتاح في ريندر هنا
+# استخدم مفتاح OpenRouter مباشرة (مش آمن - الأفضل استخدام environment variable)
+OPENROUTER_API_KEY = "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"
 BASE_URL = "https://openrouter.ai/api/v1/chat/completions"
 
 @app.route("/", methods=["GET"])
