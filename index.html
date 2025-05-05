@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>فرض الضريبة على صافي الأرباح - التكاليف الواجبة الخصم</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@11.6.0/dist/mermaid.min.js"></script>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            font-family: Arial, sans-serif;
+        }
+        .slide {
+            width: 1280px;
+            min-height: 720px;
+            overflow: hidden;
+            position: relative;
+            background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+            display: flex;
+            flex-direction: column;
+        }
+        .header {
+            background: linear-gradient(90deg, #1e40af 0%, #3b82f6 100%);
+            color: white;
+            padding: 15px 30px;
+            border-bottom-left-radius: 20px;
+            border-bottom-right-radius: 20px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+        .mind-map {
+            height: 600px;
+            padding: 20px;
+        }
+        .node-card {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 10px;
+            transition: all 0.3s ease;
+        }
+        .node-card:hover {
+            transform: scale(1.02);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+        }
+        .node-icon {
+            background: #3b82f6;
+            color: white;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="slide">
+        <div class="header flex items-center justify-between">
+            <h1 class="text-2xl font-bold">فرض الضريبة على صافي الأرباح</h1>
+            <div class="flex items-center">
+                <i class="fas fa-calculator mr-2"></i>
+                <span>التكاليف الواجبة الخصم والشروط المطلوبة</span>
+            </div>
+        </div>
+        
+        <div class="mind-map">
+            <div class="mermaid w-full h-full" id="mindMap">
+flowchart TD
+    A[فرض الضريبة على صافي الأرباح] --> B[ماهية التكاليف]
+    A --> C[نظريات تحديد وعاء الضريبة]
+    A --> D[شروط التكاليف والمصروفات]
+    A --> E[الإيرادات الإجمالية الخاضعة للضريبة]
+    
+    B --> B1[المبالغ المنفقة للحصول على الأرباح وحمايتها]
+    
+    C --> C1[نظرية حساب الاستغلال العادي]
+    C --> C2[نظرية الميزانية]
+    
+    C1 --> C1A[الربح = إجمالي إيرادات العمليات - التكاليف]
+    C1A --> C1A1[أجور ومرتبات]
+    C1A --> C1A2[أسعار المواد الأولية]
+    C1A --> C1A3[كهرباء ومياه]
+    C1A --> C1A4[إيجار واستهلاكات]
+    
+    C2 --> C2A[الربح = قيمة المنشأة في نهاية العام - قيمتها في البداية]
+    
+    D --> D1[أن تكون نفقة حقيقية ومؤكدة]
+    D --> D2[الارتباط بالنشاط التجاري أو الصناعي]
+    D --> D3[ألا تكون تكاليف رأسمالية]
+    
+    D1 --> D1A[العبرة باستحقاق النفقة وليس بصرفها]
+    D1 --> D1B[مصروفات لا تحتاج إثبات بمستندات]
+    D1B --> D1B1[انتقالات داخلية]
+    D1B --> D1B2[ضيافة داخلية]
+    D1B --> D1B3[نظافة]
+    D1B --> D1B4[صيانة عادية]
+    
+    E --> E1[إيرادات الاستغلال العادي]
+    E --> E2[إيرادات العمليات الثانوية]
+    E --> E3[إيرادات العمليات الرأسمالية]
+    
+    E1 --> E1A[الغرض الأصلي للمنشأة]
+    E2 --> E2A[عمليات ثانوية متصلة بالنشاط]
+    E3 --> E3A[بيع الأصول الرأسمالية والتعويضات]
+
+style A fill:#3b82f6,stroke:#1e40af,color:#fff,stroke-width:2px
+style B fill:#93c5fd,stroke:#3b82f6,color:#1e3a8a
+style C fill:#93c5fd,stroke:#3b82f6,color:#1e3a8a
+style D fill:#93c5fd,stroke:#3b82f6,color:#1e3a8a
+style E fill:#93c5fd,stroke:#3b82f6,color:#1e3a8a
+            </div>
+        </div>
+        
+        <div class="flex justify-between px-10 pb-4">
+            <div class="node-card w-56">
+                <div class="flex items-center mb-2">
+                    <div class="node-icon">
+                        <i class="fas fa-exclamation-circle"></i>
+                    </div>
+                    <h3 class="mr-2 font-bold">ما لا يُعتبر من التكاليف</h3>
+                </div>
+                <ul class="text-sm list-disc pr-6">
+                    <li>الاحتياطيات والمخصصات</li>
+                    <li>الغرامات والتعويضات</li>
+                    <li>الضريبة على الدخل</li>
+                    <li>العوائد التي تتجاوز مثلي سعر الائتمان</li>
+                </ul>
+            </div>
+            
+            <div class="node-card w-56">
+                <div class="flex items-center mb-2">
+                    <div class="node-icon">
+                        <i class="fas fa-check-circle"></i>
+                    </div>
+                    <h3 class="mr-2 font-bold">اتجاه المشرع المصري</h3>
+                </div>
+                <p class="text-sm">
+                    يميل المشرع المصري إلى نظرية حساب الاستغلال العادي مع فرض الضريبة أيضاً على الأرباح الناتجة من بيع الأصول الرأسمالية والتعويضات
+                </p>
+            </div>
+            
+            <div class="node-card w-56">
+                <div class="flex items-center mb-2">
+                    <div class="node-icon">
+                        <i class="fas fa-balance-scale"></i>
+                    </div>
+                    <h3 class="mr-2 font-bold">شروط الإهلاكات</h3>
+                </div>
+                <ul class="text-sm list-disc pr-6">
+                    <li>5% للأصول الثابتة المادية</li>
+                    <li>10% للأصول المعنوية</li>
+                    <li>لا تشمل الأرض والأصول التي لا تستهلك</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            mermaid.initialize({
+                startOnLoad: true,
+                theme: 'default',
+                flowchart: {
+                    useMaxWidth: true,
+                    htmlLabels: true,
+                    curve: 'basis'
+                }
+            });
+        });
+    </script>
+</body>
+</html>
